@@ -1,0 +1,120 @@
+
+
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="http://momentjs.com/downloads/moment.min.js"></script>
+</head>
+<html>
+
+<body>
+<canvas id="myCanvas" width="500" height="300" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+​
+	<script>
+
+	//Moment of the future
+		//2017 Christmas.
+		christmas_=moment('2017-12-25')
+
+		//Time to go home
+		home_=moment('2017-05-14T06:30:00')
+	//
+
+
+//Demo //////////////////=======================
+	home=false;
+	christmas=true;
+
+//////////////////////////=======================
+
+	//for christmas demo only.
+	if(christmas==true){
+	treeday=moment().diff(christmas_,'days')
+
+	treeday=(500-((treeday*-1)/365*500))
+
+	let explain=moment().dayOfYear();
+	document.body.innerHTML = document.body.innerHTML + "It is the "+explain+ " day of the year";
+	}
+
+
+
+
+
+	let redImage= new Image();
+	let treeImage= new Image();
+	let user_x=0;
+	let user_y=250;
+	let currentFrame =0; 
+
+	const init=()=>{
+		const width=32;
+		const height=32;
+		let frames=3;
+		
+	redImage.src="red_right.png"
+	treeImage.src="tree.png"
+
+	}
+
+	const ctx = document.getElementById("myCanvas").getContext("2d");
+
+	//I refered to http://www.onlywebpro.com/2012/10/05/animating-sprites-in-html5-canvas/
+	//as well as w3 schools html canvas section.
+
+	const draw=()=>{
+		 ctx.clearRect(user_x, user_y, 100, 100)
+
+		 ctx.globalCompositeOperation = 'destination-over';
+		 ctx.drawImage(redImage,32*currentFrame,0,32,32,user_x,user_y,32,32)
+
+		currentFrame+=1
+		if(currentFrame>1)
+			currentFrame=0;
+
+
+	
+
+
+		//Is it Time To Go Home?
+		if(home){
+			//ctx.clearRect(300, 500, 100, 100)
+			ctx.moveTo(400,200)
+			ctx.lineTo(500,200)
+			ctx.lineTo(500,300)
+			ctx.lineTo(400,300)
+			ctx.lineTo(400,200)
+			ctx.lineTo(450,150)
+			ctx.lineTo(500,200)
+
+			ctx.stroke();
+			if( moment().isAfter(home_) && user_x < 450 ){
+				ctx.clearRect(user_x, user_y, 32, 32)
+				user_x+=5;
+				ctx.drawImage(redImage,32*currentFrame,0,32,32,user_x,user_y,32,32)
+			}
+
+		}
+
+		//How far are we from Christmas?
+
+		if(christmas &&!home){
+		// console.log(treeday)
+		ctx.clearRect(user_x, user_y, 32, 32)
+		user_x=treeday-32;
+
+		ctx.drawImage(redImage,32*currentFrame,0,32,32,user_x,user_y,32,32)
+		ctx.drawImage(treeImage,0,0,128,128,500-64,300-150,128,128)
+
+
+		}
+	}
+	
+	init();
+	setInterval(draw,400)
+	
+	
+	</script>
+</body>
+</html>
