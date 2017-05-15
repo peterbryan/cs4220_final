@@ -47,13 +47,13 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 
 //for home demo only.
 if(home==true){
+const snd = new Audio("darude.ogg"); // buffers automatically when created
 document.body.innerHTML = document.body.innerHTML + "Class Will End in ";
 
 let timerSpan = document.createElement('span');
 timerSpan.id = 'timer';
 document.body.appendChild(timerSpan);
 }
-const snd = new Audio("darude.ogg"); // buffers automatically when created
 
 
 	//some inits.
@@ -119,7 +119,6 @@ const snd = new Audio("darude.ogg"); // buffers automatically when created
 				var timer= document.getElementById("timer");
 				let z=parseInt(moment().diff(home_)/1000)*-1
   				timer = parseInt(moment().diff(home_)/1000)*-1
-  				if(timer>=0)
   				document.getElementById("timer").innerHTML = z;
   				console.log(z)
   			}
